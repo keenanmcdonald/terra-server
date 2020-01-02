@@ -5,10 +5,10 @@ const EntitiesService = {
         return db
             .from('terra_entities')
     },
-    getEntitiesByUserId(db, user_id) {
+    getEntitiesByUserName(db, user_name) {
         return db
             .from('terra_entities')
-            .where({user_id})
+            .where({user_name})
             .select('*')
     },
     insertEntity(db, entity) {

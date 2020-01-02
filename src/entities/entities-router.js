@@ -16,9 +16,9 @@ entitiesRouter
             .catch(next)
     })
     .post(jsonBodyParser, (req, res, next) => {
-        const {name, description, user_id, type, position} = req.body
+        const {name, description, user_name, type, position} = req.body
 
-        for (const field of ['name', 'type', 'user_id', 'position']){
+        for (const field of ['name', 'type', 'user_name', 'position']){
             if (!req.body[field]){
                 return res.status(400).json({
                     error: `Missing '${field}' in request body`
@@ -29,7 +29,7 @@ entitiesRouter
         const newEntity = {
             name,
             description,
-            user_id,
+            user_name,
             position,
             type,
             date_created: 'now()',
@@ -66,24 +66,24 @@ entitiesRouter
             .catch(next)
     })
 entitiesRouter 
-    .route('/user/:user_id')
+    .route('/user/:user_name')
     .get((req, res, next) => {
-        let {user_id} = req.params
+        let {user_name} = req.params
+        console.log(user_name)
 
-        console.log(user_id)
-
-        UsersService.getUserById(req.app.get('db'), user_id)
+        UsersService.getUserByName(req.app.get('db'), user_name)
             .then(user => {
                 console.log('user: ' + user)
                 if (!user){
+                    console.log('no user exists')
                     return res.status(404).json({
                         error: {message: 'user not found'}
-                    })
+                    }).end()
                 }
             })
             .catch(next)
 
-        EntitiesService.getEntitiesByUserId(req.app.get('db'), user_id)
+        EntitiesService.getEntitiesByUserName(req.app.get('db'), user_name)
             .then(entities => {
                 res.status(201).json(entities)
             })

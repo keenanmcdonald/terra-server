@@ -17,7 +17,7 @@ authRouter.post('/login', jsonBodyParser, (req, res, next) => {
         AuthService.getUserWithEmail(
             req.app.get('db'),
             loginUser.email
-        )        
+        )
             .then(dbUser => {
                 console.log(`user ${dbUser}`)
                 if (!dbUser){
@@ -42,6 +42,20 @@ authRouter.post('/login', jsonBodyParser, (req, res, next) => {
             })
             .catch(next)
     })
+
+authRouter.post('/verify_token', jsonBodyParser, (req, res, next) => {
+    const {authToken} = req.body
+    
+    AuthService.verifyJWT(authToken)
+        .then(pass => {
+            if (pass){
+                return res.status(200)
+            }
+            else {
+                res.status(401)
+            }
+        })
+}
 /*
 authRouter.post('/refresh', requireAuth, (req, res) => {
     const sub = req.user.user_name
