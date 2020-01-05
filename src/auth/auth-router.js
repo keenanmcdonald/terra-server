@@ -55,7 +55,7 @@ authRouter.post('/verify_token', jsonBodyParser, (req, res, next) => {
                 res.status(401)
             }
         })
-}
+})
 /*
 authRouter.post('/refresh', requireAuth, (req, res) => {
     const sub = req.user.user_name

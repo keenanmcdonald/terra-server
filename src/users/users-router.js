@@ -14,6 +14,7 @@ usersRouter
             .catch(next)
     })
     .post(jsonBodyParser, (req, res, next) => {
+        console.log('post user called')
         const {email, user_name, password} = req.body
 
         for (const field of ['email', 'user_name', 'password']) {
@@ -30,14 +31,19 @@ usersRouter
             return res.status(400).json({error: passwordError})
         }
 
+        console.log('password validated')
+
         UsersService.hasUserWithEmail(req.app.get('db'), email)
             .then(hasUser => {
                 if (hasUser) {
                     return res.status(400).json({error: 'There is already an account associated with this email address'})
                 }
 
+                console.log('not has user')
+
                 return UsersService.hashPassword(password)
                     .then(hashedPassword => {
+                        console.log('password hashed')
                         const newUser = {
                             email,
                             user_name,
@@ -47,6 +53,7 @@ usersRouter
 
                         return UsersService.insertUser(req.app.get('db'), newUser)
                             .then(user => {
+                                console.log('user inserted')
                                 res.status(201)
                             })
                     })
