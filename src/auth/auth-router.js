@@ -19,7 +19,6 @@ authRouter.post('/login', jsonBodyParser, (req, res, next) => {
             loginUser.email
         )
             .then(dbUser => {
-                console.log(`user ${dbUser}`)
                 if (!dbUser){
                     return res.status(400).json({
                         error: 'Incorrect username or password'
