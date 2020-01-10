@@ -8,6 +8,11 @@ const AuthService = {
             .where({email})
             .first()
     },
+    getUserWithUserName(db, user_name){
+        return db('terra_users')
+            .where({user_name})
+            .first()
+    },
     comparePasswords(password, hash) {
         return bcrypt.compare(password, hash)
     },
