@@ -17,7 +17,7 @@ usersRouter
             .catch(next)
     })
     .post(jsonBodyParser, (req, res, next) => {
-        const {email, user_name, password} = req.body
+        let {email, user_name, password} = req.body
 
         email = email.toLowerCase()
 
