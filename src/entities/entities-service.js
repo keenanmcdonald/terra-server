@@ -30,7 +30,19 @@ const EntitiesService = {
             .select('*')
             .where({id})
             .first()
-    }
+    },
+    serializeEntity(entity) {
+        return {
+            id: entity.id,
+            user_name: xss(entity.user_name),
+            name: xss(entity.name),
+            description: xss(entity.description),
+            position: entity.position,
+            type: entity.type,
+            date_created: new Date(entity.date_created)
+        }
+    },
+
 }
 
 module.exports = EntitiesService

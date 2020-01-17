@@ -1,6 +1,7 @@
 const express = require('express')
 const AuthService = require('./auth-service')
 const {requireAuth} = require('../middleware/jwt-auth')
+const UserService = require('../users/users-service')
 
 const authRouter = express.Router()
 const jsonBodyParser = express.json()
@@ -47,7 +48,6 @@ authRouter.post('/verify_token', jsonBodyParser, (req, res, next) => {
     const {authToken} = req.body
     
     const payload = AuthService.verifyJwt(authToken)
-    console.log(payload)
 
     if (payload){
         AuthService.getUserWithEmail(req.app.get('db'), payload.sub)
@@ -55,6 +55,7 @@ authRouter.post('/verify_token', jsonBodyParser, (req, res, next) => {
                 if (!user){
                     return res.status(401).json({error: 'Unauthorized request'})
                 }
+                user = UserService.serializeUser(user)
                 res
                     .status(201)
                     .json(user)

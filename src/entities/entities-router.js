@@ -12,6 +12,9 @@ entitiesRouter
     .get((req, res, next) => {
         EntitiesService.getAllEntities(req.app.get('db'))
             .then(entities => {
+                entities = entities.map(entity => {
+                    return EntitiesService.serializeEntity(entity)
+                })
                 res.json(entities)
             })
             .catch(next)
@@ -75,9 +78,7 @@ entitiesRouter
 
         UsersService.getUserByName(req.app.get('db'), user_name)
             .then(user => {
-                console.log('user: ' + user)
                 if (!user){
-                    console.log('no user exists')
                     return res.status(404).json({
                         error: {message: 'user not found'}
                     }).end()
@@ -87,6 +88,9 @@ entitiesRouter
 
         EntitiesService.getEntitiesByUserName(req.app.get('db'), user_name)
             .then(entities => {
+                entities = entities.map(entity => {
+                    return EntitiesService.serializeEntity(entity)
+                })
                 res.status(201).json(entities)
             })
             .catch(next)
