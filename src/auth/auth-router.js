@@ -18,7 +18,7 @@ authRouter.post('/login', jsonBodyParser, (req, res, next) => {
     
         AuthService.getUserWithEmail(
             req.app.get('db'),
-            loginUser.email
+            loginUser.email.toLowerCase()
         )
             .then(dbUser => {
                 if (!dbUser){
