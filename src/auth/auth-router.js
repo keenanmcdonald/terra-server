@@ -69,13 +69,5 @@ authRouter.post('/verify_token', jsonBodyParser, (req, res, next) => {
     }
 })
 
-authRouter.post('/refresh', requireAuth, (req, res) => {
-    const sub = req.user.user_name
-    const payload = {userid: req.user.id }
-    res.send({
-        authToken: AuthService.createJwt(sub, payload)
-    })
-})
-
 
 module.exports = authRouter

@@ -43,7 +43,7 @@ entitiesRouter
             .then(entity => {
                 res
                     .status(201)
-                    .json(entity)
+                    .send(entity)
             })
             .catch(next)
     })
