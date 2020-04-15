@@ -12,6 +12,7 @@ entitiesRouter
     .get((req, res, next) => {
         EntitiesService.getAllEntities(req.app.get('db'))
             .then(entities => {
+                console.log('raw entities: ', entities)
                 entities = entities.map(entity => {
                     return EntitiesService.serializeEntity(entity)
                 })

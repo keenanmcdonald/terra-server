@@ -38,7 +38,7 @@ const EntitiesService = {
             name: xss(entity.name),
             description: xss(entity.description),
             position: entity.position,
-            elevation: entitiy.elevation,
+            //elevation: entitiy.elevation,
             type: entity.type,
             date_created: new Date(entity.date_created)
         }
