@@ -8,7 +8,7 @@ const jsonBodyParser = express.json()
 
 entitiesRouter
     .route('/')
-    .all(requireAuth)
+    //.all(requireAuth)
     .get((req, res, next) => {
         EntitiesService.getAllEntities(req.app.get('db'))
             .then(entities => {
