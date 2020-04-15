@@ -22,7 +22,7 @@ entitiesRouter
     .post(jsonBodyParser, (req, res, next) => {
         const {name, description, user_name, type, position} = req.body
 
-        for (const field of ['name', 'type', 'user_name', 'position']){
+        for (const field of ['name', 'type', 'user_name', 'position', 'elevation']){
             if (!req.body[field]){
                 return res.status(400).json({
                     error: `Missing '${field}' in request body`
@@ -35,6 +35,7 @@ entitiesRouter
             description,
             user_name,
             position,
+            elevation,
             type,
             date_created: 'now()',
         }
