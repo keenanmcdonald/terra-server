@@ -21,7 +21,7 @@ entitiesRouter
             .catch(next)
     })
     .post(jsonBodyParser, (req, res, next) => {
-        const {name, description, user_name, type, position} = req.body
+        const {name, description, user_name, type, position, elevation} = req.body
 
         for (const field of ['name', 'type', 'user_name', 'position', 'elevation']){
             if (!req.body[field]){
