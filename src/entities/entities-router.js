@@ -8,7 +8,7 @@ const jsonBodyParser = express.json()
 
 entitiesRouter
     .route('/')
-    //.all(requireAuth)
+    .all(requireAuth)
     .get((req, res, next) => {
         EntitiesService.getAllEntities(req.app.get('db'))
             .then(entities => {
@@ -21,9 +21,9 @@ entitiesRouter
             .catch(next)
     })
     .post(jsonBodyParser, (req, res, next) => {
-        const {name, description, user_name, type, position, elevation} = req.body
+        const {name, description, user_name, type, position} = req.body
 
-        for (const field of ['name', 'type', 'user_name', 'position', 'elevation']){
+        for (const field of ['name', 'type', 'user_name', 'position']){
             if (!req.body[field]){
                 return res.status(400).json({
                     error: `Missing '${field}' in request body`
@@ -36,7 +36,6 @@ entitiesRouter
             description,
             user_name,
             position,
-            elevation,
             type,
             date_created: 'now()',
         }
@@ -59,7 +58,7 @@ entitiesRouter
         EntitiesService.getEntityById(req.app.get('db'), entityId)
             .then(entity => {
                 if (!entity){
-                    return res.status(404).json({
+                    return res.status(404).send({
                         error: {message: 'entity does not exist'}
                     })
                 }
