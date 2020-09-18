@@ -5,7 +5,7 @@ This is the back end server for Terra - a mapping app that allows users to creat
 https://github.com/keenanmcdonald/terra-app
 
 ## Terra Live App
-https://terra-app.keenanmcdonald.now.sh/
+https://terra-app-omega-lac.now.sh
 
 ## Endpoints
 All entities endpoints require authentication attached to header.
