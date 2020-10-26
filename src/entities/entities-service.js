@@ -11,6 +11,13 @@ const EntitiesService = {
             .where({user_name})
             .select('*')
     },
+    updateEntity(db, id, data){
+        return db('terra_entities')
+            .where({id})
+            .update(data)
+            .returning('*')
+            .then(([entity]) => entity)
+    },
     insertEntity(db, entity) {
         return db
             .insert(entity)
@@ -25,6 +32,7 @@ const EntitiesService = {
             .delete()
     },
     getEntityById(db, id){
+        console.log('id: ', id)
         return db
             .from('terra_entities')
             .select('*')

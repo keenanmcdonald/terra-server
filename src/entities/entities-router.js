@@ -71,6 +71,44 @@ entitiesRouter
             })
             .catch(next)
     })
+    .get((req, res, next) => {
+        let {entityId} = req.params
+
+        EntitiesService.getEntityById(req.app.get('db'), entityId)
+            .then(entity => {
+                if (!entity){
+                    return res.status(404).send({
+                        error: {message: 'entity does not exist'}
+                    })
+                }
+                else{
+                    res.status(200).send({
+                        entity
+                    })
+                }
+            })
+            .catch(next)
+    })
+    .patch(jsonBodyParser, (req, res, next) => {
+        let {entityId} = req.params
+
+        EntitiesService.getEntityById(req.app.get('db'), entityId)
+            .then(entity => {
+                if (!entity){
+                    return res.status(404).send({
+                        error: {message: 'entity does not exist'}
+                    })
+                }
+            })
+            .catch(next)
+
+         
+        EntitiesService.updateEntity(req.app.get('db'), entityId, req.body)
+            .then(entity => {
+                res.status(200).send(entity)
+            })
+            .catch(next)
+    })
 entitiesRouter 
     .route('/user/:user_name')
     .all(requireAuth)
