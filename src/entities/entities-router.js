@@ -10,9 +10,8 @@ entitiesRouter
     .route('/')
     .all(requireAuth)
     .get((req, res, next) => {
-        EntitiesService.getAllEntities(req.app.get('db'))
+        EntitiesService.getAllPublicEntities(req.app.get('db'))
             .then(entities => {
-                console.log('raw entities: ', entities)
                 entities = entities.map(entity => {
                     return EntitiesService.serializeEntity(entity)
                 })
@@ -91,6 +90,8 @@ entitiesRouter
     })
     .patch(jsonBodyParser, (req, res, next) => {
         let {entityId} = req.params
+
+        console.log(req.body)
 
         EntitiesService.getEntityById(req.app.get('db'), entityId)
             .then(entity => {

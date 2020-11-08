@@ -11,5 +11,6 @@ CREATE TABLE terra_entities (
     user_name TEXT NOT NULL REFERENCES terra_users(user_name),
     type entity_type NOT NULL,
     position FLOAT[][],
+    private BOOLEAN DEFAULT false NOT NULL,
     date_created TIMESTAMP DEFAULT now() NOT NULL
 )

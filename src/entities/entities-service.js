@@ -1,9 +1,10 @@
 const xss = require('xss')
 
 const EntitiesService = {
-    getAllEntities(db) {
+    getAllPublicEntities(db) {
         return db
             .from('terra_entities')
+            .where('private', false)
     },
     getEntitiesByUserName(db, user_name) {
         return db
@@ -47,6 +48,7 @@ const EntitiesService = {
             description: xss(entity.description),
             position: entity.position,
             type: entity.type,
+            private: entity.private,
             date_created: new Date(entity.date_created)
         }
     },
